@@ -25,5 +25,8 @@
   .tertiary-btn {
     @apply bg-tertiary py-[10px] px-[80px] rounded-[2px]  font-[700] text-white transition-all duration-300 ease-in-out cursor-pointer;
   }
+  .container {
+    @apply  container mx-auto ;
+  }
   
 }
