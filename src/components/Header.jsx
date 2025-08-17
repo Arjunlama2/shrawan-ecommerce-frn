@@ -8,7 +8,10 @@ import { BiHeartSquare } from "react-icons/bi";
 import { FaRegHeart } from "react-icons/fa";
 
 import { CiSearch } from "react-icons/ci";
+import { useSelector } from "react-redux";
 function Header() {
+  const user = useSelector((state) => state.user)
+  console.log("this is user from global state", user)
   return (
     <div>
       <header>
@@ -41,8 +44,14 @@ function Header() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <p>Login</p>
-                  <FaRegUser />
+                  {
+                    user.userName ? user.userName : (
+                      <div className="flex gap-2 items-center">
+                        <p>Login</p>
+                        <FaRegUser />
+                         </div>)
+                     
+                  }
                 </div>
                 <div className="flex items-center gap-2">
                   <p>Wishlist</p>
@@ -70,7 +79,7 @@ function Header() {
           </div>
 
           <div className="flex items-center gap-5">
-            <input type="text"  className="border-2"/>
+            <input type="text" className="border-2" />
 
             <CiSearch />
           </div>

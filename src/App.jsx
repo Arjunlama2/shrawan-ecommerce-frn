@@ -5,6 +5,10 @@ import Home from "./pages/home/Home";
 import Details, {} from "./components/Details";
 
 function App() {
+  
+
+  
+  // console.log(user)
   return (
     <>
    <Routes> 
