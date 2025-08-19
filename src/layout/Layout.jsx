@@ -10,10 +10,10 @@ import useFetch from '../hook/useFetch'
 function Layout() {
   const dispatch = useDispatch()
 
-const {data}=useFetch("product")
+const {data,error}=useFetch("/product")
 
+console.log(error)
 
-console.log(data)
 
   return (
     <>

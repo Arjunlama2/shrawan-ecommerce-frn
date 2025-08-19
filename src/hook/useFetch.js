@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-const BaseUril = "https://chaitra-ecommerce-backend.onrender.com/api/v1";
+export const BaseUril = "https://lujah-batch-ecommerce-bn.onrender.com";
 
 function useFetch(endpoint, options = {}) {
   const [data, setData] = useState(null);
@@ -19,7 +19,6 @@ function useFetch(endpoint, options = {}) {
         setLoading(false);
       })
       .catch((err) => {
-        
           setError(err.message || "Something went wrong");
           setLoading(false);
         
