@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Mail, Lock, User, Phone, Home, Eye, EyeOff, RollerCoaster, User2 } from 'lucide-react';
 import axios from 'axios';
-import { BaseUril } from '../hook/useFetch';
+import { BaseUrl } from '../hook/useFetch';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
 
 function SignupForm() {
     const [showPassword, setShowPassword] = useState(false);
-    const [username, setUserName] = useState("")
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({
         username: '',
         password: '',
@@ -14,18 +16,37 @@ function SignupForm() {
 
     });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        fetch( `${BaseUril}/api/v1/user/signup`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formData),
-        })
-            .then(res => res.json())
-            .then(data => console.log(data))
-            .catch(err => console.error(err));
+        try {
+            const res = await axios.post(`${BaseUrl}/api/v1/user/signup`, formData)
+            console.log(res)
+            if (res.data) {
+                toast("Signed up sucessfully")
+                navigate("/login")
+
+            }
+
+        } catch (error) {
+            if (error.response) {
+                toast.error(error.response.data.message || "Signup failed!");
+                console.error("Error Response:", error.response.data);
+            }
+            // If no response from server
+            else if (error.request) {
+                toast.error("No response from server. Please try again later.");
+                console.error("Error Request:", error.request);
+            }
+            // Other unexpected errors
+            else {
+                toast.error("Something went wrong!");
+                console.error("Error:", error.message);
+            }
+        }
+
+
     };
-    console.log(username)
+
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-50 px-4">
             <div className="w-full max-w-xl bg-white p-6 sm:p-8 rounded-md shadow-md border border-blue-400">
@@ -108,19 +129,14 @@ function SignupForm() {
                         </div>
                         <div className="mb-4">
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                                Email
+                                Role
                             </label>
                             <div className="relative">
                                 <User2 className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                                <input
-                                    id="role"
-                                    type="text"
-                                    placeholder="role"
-                                    value={formData.role}
-                                    onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                                    className="w-full border border-gray-300 rounded-md pl-12 pr-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#0A174E]"
-                                    required
-                                />
+                                <select name="role" id="role" onChange={(e) => setFormData({ ...formData, role: e.target.value })}>
+                                    <option value="buyer">Buyer</option>
+                                    <option value="seller">Seller</option>
+                                </select>
                             </div>
                         </div>
                     </div>

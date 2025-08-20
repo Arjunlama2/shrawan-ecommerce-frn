@@ -6,15 +6,24 @@ import { useDispatch } from 'react-redux'
 import { setUser } from '../redux/Reducers/userSlice'
 import axios from 'axios'
 import useFetch from '../hook/useFetch'
+import { User } from 'lucide-react'
 
 function Layout() {
   const dispatch = useDispatch()
 
-const {data,error}=useFetch("/product")
+  const { data, error } = useFetch("api/v1/product")
 
-console.log(error)
+  console.log(error)
+  const { data: user } = useFetch("api/v1/user/me")
+  useEffect(() => {
 
+    dispatch(setUser({
+      userName: user?.username,
+      role: user?.role,
+      email: user?.email
+    }))
 
+  }, [user])
   return (
     <>
       <Header />
@@ -22,11 +31,6 @@ console.log(error)
 
 
 
-      <button className='primary-btn' onClick={() => dispatch(setUser({
-        userName: "Milan",
-        role: "buyer",
-        email: "skillspark",
-      }))}>Set User</button>
       <Outlet />
 
       <Footer />

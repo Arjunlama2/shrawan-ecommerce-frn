@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
+import { BaseUrl } from '../hook/useFetch';
+import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -7,11 +11,28 @@ function LoginForm() {
     email: '',
     password: ''
   });
+  const navigate = useNavigate()
+
+  const handleSubmmit = async (e) => {
+    e.preventDefault()
+    try {
+      console.log(formData)
+      const res = await axios.post(`${BaseUrl}/api/v1/user/login`, formData)
+      console.log(res)
+      localStorage.setItem("token",res?.data?.token)
+      navigate("/")
+
+    } catch (err) {
+      console.log(err)
+      toast.error(err?.response?.data?.message)
+    }
+
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
       <div className="w-full max-w-sm bg-white p-6 sm:p-8 rounded-md shadow-md border border-blue-400">
-        
+
         {/* Title */}
         <h2 className="text-2xl font-bold text-center mb-2">Login</h2>
         <p className="text-sm text-gray-500 text-center mb-6">
@@ -71,7 +92,9 @@ function LoginForm() {
         </div>
 
         {/* Sign In Button */}
-        <button className="w-full primary-btn py-3 rounded-md pl-10 pr-10 ">
+        <button className="w-full primary-btn py-3 rounded-md pl-10 pr-10 "
+          onClick={(e) => handleSubmmit(e)}
+        >
           Sign In
         </button>
 
