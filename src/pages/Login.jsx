@@ -16,11 +16,11 @@ function LoginForm() {
   const handleSubmmit = async (e) => {
     e.preventDefault()
     try {
-      console.log(formData)
+
       const res = await axios.post(`${BaseUrl}/api/v1/user/login`, formData)
-      console.log(res)
       localStorage.setItem("token",res?.data?.token)
       navigate("/")
+      toast.success("Login Successfull")
 
     } catch (err) {
       console.log(err)

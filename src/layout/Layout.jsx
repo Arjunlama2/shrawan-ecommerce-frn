@@ -11,19 +11,23 @@ import { User } from 'lucide-react'
 function Layout() {
   const dispatch = useDispatch()
 
+  const token = localStorage.getItem("token")
   const { data, error } = useFetch("api/v1/product")
 
-  console.log(error)
-  const { data: user } = useFetch("api/v1/user/me")
-  useEffect(() => {
+  if (token) {
 
-    dispatch(setUser({
-      userName: user?.username,
-      role: user?.role,
-      email: user?.email
-    }))
+    const { data: user } = useFetch("api/v1/user/me")
 
-  }, [user])
+    useEffect(() => {
+
+      dispatch(setUser({
+        userName: user?.username,
+        role: user?.role,
+        email: user?.email
+      }))
+
+    }, [user])
+  }
   return (
     <>
       <Header />
