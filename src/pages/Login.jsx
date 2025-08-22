@@ -19,6 +19,7 @@ function LoginForm() {
 
       const res = await axios.post(`${BaseUrl}/api/v1/user/login`, formData)
       localStorage.setItem("token",res?.data?.token)
+      
       navigate("/")
       toast.success("Login Successfull")
 

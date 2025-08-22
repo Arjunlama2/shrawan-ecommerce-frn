@@ -7,16 +7,23 @@ import { setUser } from '../redux/Reducers/userSlice'
 import axios from 'axios'
 import useFetch from '../hook/useFetch'
 import { User } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query'
+import { getMe } from '../api'
 
 function Layout() {
   const dispatch = useDispatch()
 
   const token = localStorage.getItem("token")
-  const { data, error } = useFetch("api/v1/product")
+ 
 
   if (token) {
 
-    const { data: user } = useFetch("api/v1/user/me")
+    // const { data: user } = useFetch("api/v1/user/me")
+    const {data:user}=useQuery({
+      queryKey:"infor",
+      queryFn:getMe
+    })
+
 
     useEffect(() => {
 
