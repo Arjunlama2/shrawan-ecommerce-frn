@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Navigate, Outlet } from "react-router";
 import useFetch from "../hook/useFetch";
 import { setUser } from "../redux/Reducers/userSlice";
+import Sidebar from "../components/Sidebar";
 
 
 function AdminLayout() {
@@ -17,7 +18,7 @@ function AdminLayout() {
   useEffect(() => {
     if (fetchedUser) {
       dispatch(
-        setUser ({
+        setUser({
           userName: fetchedUser?.username,
           role: fetchedUser?.role,
           email: fetchedUser?.email,
@@ -37,7 +38,11 @@ function AdminLayout() {
   if (user.role === "seller") {
     return (
       <div className="flex">
-        <aside className="w-[20vw] bg-red-400 h-[100vh]">sidebar</aside>
+        <aside className="w-[20vw] bg-red-400 h-[100vh]">
+          <Sidebar />
+
+
+        </aside>
         <div>
           <Outlet />
         </div>

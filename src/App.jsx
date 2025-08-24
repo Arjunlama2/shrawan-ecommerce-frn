@@ -9,6 +9,7 @@ import ProtectedRoute from "./hoc/ProtectedRoute";
 import Cart from "./pages/Cart";
 import AdminLayout from "./layout/AdminLayout";
 import Product from "./pages/product/Product";
+import ProductTable from "./adminpages/Product";
 
 function App() {
 
@@ -39,6 +40,7 @@ function App() {
         <Route path="/admin" element={<AdminLayout/>}>
           <Route index element={<div>This is dahoard home page</div>} />
           <Route path="orders" element={<div>This is all orders page</div>} />
+          <Route path="product" element={<ProductTable/>} />
         </Route>
 
       </Routes>
